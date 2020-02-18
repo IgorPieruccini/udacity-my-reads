@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import Card from 'react-bootstrap/Card';
 class Book extends React.Component {
   constructor(props) {
     super(props);
@@ -12,10 +12,13 @@ class Book extends React.Component {
 
   render() {
     return (
-      <div>
-        <h3>{this.props.name}</h3>
-        <p>{this.props.author}</p>
-      </div>
+      <Card style={{ width: '18rem' }}>
+        <Card.Img variant="top" src={this.props.coverUrl} />
+        <Card.Body>
+          <Card.Title>{this.props.name}</Card.Title>
+          <Card.Text>{this.props.author}</Card.Text>
+        </Card.Body>
+      </Card>
     );
   }
 }
