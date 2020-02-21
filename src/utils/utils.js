@@ -13,3 +13,19 @@ export const bookStatus = {
  * Shelf are defined by bookStatus
  */
 export const shelfTypes = bookStatus.READ | bookStatus.READING | bookStatus.WANT_TO_READ;
+
+/**
+ * separete array of books into arrays of books per chelf type
+ * @param {array books}
+ */
+export const sortBooksByShelf = books => {
+  return books.reduce(
+    (acc, cur) => {
+      return {
+        ...acc,
+        [cur.shelf]: [...acc[cur.shelf], cur]
+      };
+    },
+    { currentlyReading: [], wantToRead: [], read: [] }
+  );
+};
