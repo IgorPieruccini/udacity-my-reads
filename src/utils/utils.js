@@ -54,3 +54,11 @@ export const updateState = (state, id, shelf) => {
     }
   );
 };
+
+/**
+ * check if response from server is not an error
+ * @param {any} data
+ */
+export const isResponseValid = data => {
+  return data && !data.hasOwnProperty('error');
+};

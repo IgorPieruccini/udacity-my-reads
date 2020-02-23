@@ -2,6 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Shelf from './shelf';
 import { search } from '../BooksAPI';
+import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
+import { isResponseValid } from '../utils/utils';
 
 class Search extends React.Component {
   constructor(props) {
@@ -10,15 +13,23 @@ class Search extends React.Component {
       key: '',
       books: []
     };
+    this.search$ = new Subject();
+    this.search$.pipe(debounceTime(200)).subscribe(key => {
+      if (key) {
+        search(key).then(books => {
+          if (isResponseValid(books)) {
+            this.setState({ books });
+          }
+        });
+      } else {
+        this.setState({ books: [] });
+      }
+    });
   }
 
   handleKeyUpdate(key) {
+    this.search$.next(key);
     this.setState({ key });
-    this.handleSearch(key);
-  }
-
-  handleSearch(key) {
-    search(key).then(books => this.setState({ books }));
   }
 
   render() {
@@ -36,7 +47,7 @@ class Search extends React.Component {
             value={this.state.key}
           />
         </form>
-        <Shelf books={this.state.books} update={(book, shelf) => this.handleUpdate(book, shelf)} />
+        <Shelf books={this.state.books} update={(book, shelf) => this.props.update(book, shelf)} />
       </div>
     );
   }

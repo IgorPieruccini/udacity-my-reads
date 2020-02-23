@@ -3,7 +3,7 @@ import Shelf from './shelf';
 import Header from './header';
 import Search from './search';
 import styled from 'styled-components';
-import { bookStatus, sortBooksByShelf, updateState } from '../utils/utils';
+import { bookStatus, sortBooksByShelf, updateState, isResponseValid } from '../utils/utils';
 import { flexStyled } from '../styled/styled';
 import { getAll, update, search } from '../BooksAPI';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
@@ -27,7 +27,11 @@ class App extends React.Component {
   }
 
   handleUpdate(book, shelf) {
-    update(book, shelf).then(res => this.setState(updateState(this.state, book.id, shelf)));
+    update(book, shelf).then(res => {
+      if (isResponseValid(res)) {
+        this.setState(updateState(this.state, book.id, shelf));
+      }
+    });
   }
 
   clearState() {
@@ -69,7 +73,7 @@ class App extends React.Component {
               path={'/search'}
               render={() => (
                 <Search
-                  update={() => {
+                  update={(book, shelf) => {
                     this.handleUpdate(book, shelf);
                   }}
                 />

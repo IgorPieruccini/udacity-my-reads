@@ -12,7 +12,7 @@ class Book extends React.Component {
     super(props);
     this.state = {
       optionDisplay: false,
-      bookCover: this.props.book.imageLinks.thumbnail
+      bookCover: this.props.book.imageLinks ? this.props.book.imageLinks.thumbnail : coverFallbackImage
     };
   }
 
