@@ -31,16 +31,26 @@ export const sortBooksByShelf = books => {
 };
 
 /**
- * uses the update data from server to return a new state;
- * always use the update from server to make sure its sync with the server
- * @param {object shelfs array of book} state
- * @param {object shelfs array of ids} update
+ * update the state by the book the uset moved
+ * @param {object shelfs array of book} state current state
+ * @param {string} id book id to be update
+ * @param {string} shelf to be moved
  */
-export const updateState = (state, update) => {
+export const updateState = (state, id, shelf) => {
   const books = [...state.currentlyReading, ...state.wantToRead, ...state.read];
-  return {
-    currentlyReading: books.filter(book => update.currentlyReading.find(id => id === book.id)),
-    wantToRead: books.filter(book => update.wantToRead.find(id => id === book.id)),
-    read: books.filter(book => update.read.find(id => id === book.id))
-  };
+
+  return books.reduce(
+    (acc, cur) => {
+      const curShelf = cur.id === id ? shelf : cur.shelf;
+      return {
+        ...acc,
+        [curShelf]: [...acc[curShelf], { ...cur, shelf: curShelf }]
+      };
+    },
+    {
+      currentlyReading: [],
+      wantToRead: [],
+      read: []
+    }
+  );
 };

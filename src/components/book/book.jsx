@@ -64,7 +64,7 @@ class Book extends React.Component {
 
   render() {
     return (
-      <Card style={{ maxWidth: '12rem', border: 'none' }}>
+      <Card style={{ minWidth: '180px', maxWidth: '180px', border: 'none' }}>
         <Container style={{ width: '12rem', minHeight: '12rem', height: '12rem', overflow: 'hidden' }}>
           <Card.Img
             style={{ width: '100%', height: 'auto' }}
@@ -76,7 +76,7 @@ class Book extends React.Component {
         </Container>
         <Button
           variant="dark"
-          style={{ position: 'absolute', top: '10.75rem', right: '0rem' }}
+          style={{ position: 'absolute', top: '10rem', right: '0rem' }}
           onClick={() => this.handleOptionDisplay()}
         >
           {!this.state.optionDisplay ? <MdModeEdit /> : <MdClose />}

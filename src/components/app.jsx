@@ -3,7 +3,7 @@ import Shelf from './shelf';
 import Header from './header';
 import Search from './search';
 import styled from 'styled-components';
-import { bookStatus, sortBooksByShelf } from '../utils/utils';
+import { bookStatus, sortBooksByShelf, updateState } from '../utils/utils';
 import { flexStyled } from '../styled/styled';
 import { getAll, update } from '../BooksAPI';
 
@@ -24,8 +24,9 @@ class App extends React.Component {
   }
 
   handleUpdate(book, shelf) {
-    update(book, shelf).then(res => console.log('res:', res));
+    update(book, shelf).then(res => this.setState(updateState(this.state, book.id, shelf)));
   }
+
   render() {
     return (
       <div style={{ backgroundColor: '#f0f0f0' }}>
