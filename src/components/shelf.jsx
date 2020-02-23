@@ -13,9 +13,11 @@ const Shelf = ({ type, update, books }) => {
 
   return (
     <ShelfContainer>
-      <ShelfTitle>
-        <h4>{type}</h4>
-      </ShelfTitle>
+      {type && (
+        <ShelfTitle>
+          <h4>{type}</h4>
+        </ShelfTitle>
+      )}
       <BookContainer>
         {books.map(book => {
           return <Book key={book.id} book={book} update={shelf => handleUpdate(book, shelf)} />;
@@ -26,7 +28,7 @@ const Shelf = ({ type, update, books }) => {
 };
 
 Shelf.propTypes = {
-  type: PropTypes.string.isRequired,
+  type: PropTypes.string,
   update: PropTypes.func.isRequired,
   books: PropTypes.array.isRequired
 };

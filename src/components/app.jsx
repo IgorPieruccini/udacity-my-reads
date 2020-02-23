@@ -5,16 +5,19 @@ import Search from './search';
 import styled from 'styled-components';
 import { bookStatus, sortBooksByShelf, updateState } from '../utils/utils';
 import { flexStyled } from '../styled/styled';
-import { getAll, update } from '../BooksAPI';
+import { getAll, update, search } from '../BooksAPI';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+
+const initialState = {
+  currentlyReading: [],
+  wantToRead: [],
+  read: []
+};
 
 class App extends React.Component {
   constructor() {
     super();
-    this.state = {
-      currentlyReading: [],
-      wantToRead: [],
-      read: []
-    };
+    this.state = initialState;
   }
 
   componentDidMount() {
@@ -27,28 +30,53 @@ class App extends React.Component {
     update(book, shelf).then(res => this.setState(updateState(this.state, book.id, shelf)));
   }
 
+  clearState() {
+    this.setState(initialState);
+  }
+
   render() {
     return (
-      <div style={{ backgroundColor: '#f0f0f0' }}>
-        <Header />
-        <Search
-          update={key => {
-            console.log('search update', key);
-          }}
-        />
-        <Lybrary>
-          <Shelf
-            type={bookStatus.READING}
-            books={this.state.currentlyReading}
-            update={(book, shelf) => this.handleUpdate(book, shelf)}
-          />
-          <Shelf
-            type={bookStatus.WANT_TO_READ}
-            books={this.state.wantToRead}
-            update={(book, shelf) => this.handleUpdate(book, shelf)}
-          />
-          <Shelf type={bookStatus.READ} books={this.state.read} update={(book, shelf) => this.handleUpdate(book, shelf)} />
-        </Lybrary>
+      <div>
+        <Router>
+          <Switch>
+            <Route
+              exact
+              path={'/'}
+              render={() => (
+                <div>
+                  <Header />
+                  <Lybrary>
+                    <Shelf
+                      type={bookStatus.READING}
+                      books={this.state.currentlyReading}
+                      update={(book, shelf) => this.handleUpdate(book, shelf)}
+                    />
+                    <Shelf
+                      type={bookStatus.WANT_TO_READ}
+                      books={this.state.wantToRead}
+                      update={(book, shelf) => this.handleUpdate(book, shelf)}
+                    />
+                    <Shelf
+                      type={bookStatus.READ}
+                      books={this.state.read}
+                      update={(book, shelf) => this.handleUpdate(book, shelf)}
+                    />
+                  </Lybrary>
+                </div>
+              )}
+            />
+            <Route
+              path={'/search'}
+              render={() => (
+                <Search
+                  update={() => {
+                    this.handleUpdate(book, shelf);
+                  }}
+                />
+              )}
+            />
+          </Switch>
+        </Router>
       </div>
     );
   }

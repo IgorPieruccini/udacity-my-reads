@@ -83,13 +83,15 @@ class Book extends React.Component {
         </Button>
         <Card.Body>
           <Card.Title style={{ fontSize: 16 }}>{this.props.book.title}</Card.Title>
-          {this.props.book.authors.map(author => {
-            return (
-              <Card.Text key={author} className="blockquote-footer">
-                {author}
-              </Card.Text>
-            );
-          })}
+
+          {this.props.book.authors &&
+            this.props.book.authors.map(author => {
+              return (
+                <Card.Text key={author} className="blockquote-footer">
+                  {author}
+                </Card.Text>
+              );
+            })}
         </Card.Body>
       </Card>
     );

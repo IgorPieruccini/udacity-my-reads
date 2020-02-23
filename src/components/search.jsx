@@ -1,17 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Shelf from './shelf';
+import { search } from '../BooksAPI';
 
 class Search extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      key: ''
+      key: '',
+      books: []
     };
   }
 
   handleKeyUpdate(key) {
     this.setState({ key });
-    this.props.update(key);
+    this.handleSearch(key);
+  }
+
+  handleSearch(key) {
+    search(key).then(books => this.setState({ books }));
   }
 
   render() {
@@ -29,6 +36,7 @@ class Search extends React.Component {
             value={this.state.key}
           />
         </form>
+        <Shelf books={this.state.books} update={(book, shelf) => this.handleUpdate(book, shelf)} />
       </div>
     );
   }
