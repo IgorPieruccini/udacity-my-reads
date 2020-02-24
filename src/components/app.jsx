@@ -76,6 +76,7 @@ class App extends React.Component {
                   update={(book, shelf) => {
                     this.handleUpdate(book, shelf);
                   }}
+                  state={this.state}
                 />
               )}
             />

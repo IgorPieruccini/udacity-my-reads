@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Book from './book/book';
-import { bookStatus } from '../utils/utils';
+import Book from './book';
 import styled from 'styled-components';
 import CardDeck from 'react-bootstrap/CardDeck';
 import { borderStyled } from '../styled/styled';

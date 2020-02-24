@@ -13,6 +13,7 @@ class Search extends React.Component {
       key: '',
       books: []
     };
+
     this.search$ = new Subject();
     this.search$.pipe(debounceTime(200)).subscribe(key => {
       if (key) {

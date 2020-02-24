@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { bookStatus } from '../../utils/utils';
-import coverFallbackImage from '../../assets/cover_fallback.png';
+import { bookStatus } from '../utils/utils';
+import coverFallbackImage from '../assets/cover_fallback.png';
 import { MdModeEdit } from 'react-icons/md';
 import { MdClose } from 'react-icons/md';
 import { Button, Container, Col, Card, Row } from 'react-bootstrap';
-import './book.css';
 
 class Book extends React.Component {
   constructor(props) {
@@ -29,13 +28,18 @@ class Book extends React.Component {
   }
 
   optionSettings() {
+    console.log(this.props.book);
     return (
       <Container
         style={{ padding: 0, top: '0', position: 'absolute', width: '12rem', height: '12rem', backgroundColor: '#ffffffcf' }}
       >
         <Col>
           {this.props.book.shelf !== bookStatus.READING && (
-            <Button width={100} variant="outline-dark" onClick={() => this.handleUpdateOption(bookStatus.READING)}>
+            <Button
+              width={100}
+              variant={this.props.book.shelf === bookStatus.READING ? 'secundary' : 'outline-dark'}
+              onClick={() => this.handleUpdateOption(bookStatus.READING)}
+            >
               {bookStatus.READING}
             </Button>
           )}
