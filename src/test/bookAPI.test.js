@@ -14,8 +14,7 @@ test('update - updateState', async () => {
   // create the state to test update
   const books = await getAll();
   const state = sortBooksByShelf(books);
-  const newState = updateState(state, state.wantToRead[0].id, 'currentlyReading');
-  console.log('new state', newState);
+  const newState = updateState(state, state.wantToRead[0], 'currentlyReading');
   expect(newState.currentlyReading.length).toBe(3);
   expect(newState.wantToRead.length).toBe(1);
   expect(newState.read.length).toBe(2);

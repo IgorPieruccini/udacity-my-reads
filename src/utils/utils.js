@@ -31,17 +31,21 @@ export const sortBooksByShelf = books => {
 };
 
 /**
- * update the state by the book the uset moved
+ * update the state by the book the user moved
  * @param {object shelfs array of book} state current state
- * @param {string} id book id to be update
+ * @param {string} book to be update
  * @param {string} shelf to be moved
  */
-export const updateState = (state, id, shelf) => {
+export const updateState = (state, book, shelf) => {
+  console.log('state', state);
   const books = [...state.currentlyReading, ...state.wantToRead, ...state.read];
-
+  // if its a new book
+  if (!book.shelf) {
+    books.push(book);
+  }
   return books.reduce(
     (acc, cur) => {
-      const curShelf = cur.id === id ? shelf : cur.shelf;
+      const curShelf = cur.id === book.id ? shelf : cur.shelf;
       return {
         ...acc,
         [curShelf]: [...acc[curShelf], { ...cur, shelf: curShelf }]
@@ -61,4 +65,14 @@ export const updateState = (state, id, shelf) => {
  */
 export const isResponseValid = data => {
   return data && !data.hasOwnProperty('error');
+};
+
+/**
+ * set searchBooks a shelf if is alredy on the user shelf
+ * @param {array} shelfBooks
+ * @param {array} searchBooks
+ */
+export const checkOnShelf = (shelfBooks, searchBooks) => {
+  const books = [...shelfBooks.currentlyReading, ...shelfBooks.wantToRead, ...shelfBooks.read];
+  return searchBooks.map(book => books.find(shelfBook => shelfBook.id === book.id) ?? book);
 };

@@ -19,6 +19,7 @@ const Shelf = ({ type, update, books }) => {
       )}
       <BookContainer>
         {books.map(book => {
+          // if title dont exis, check for book id
           return <Book key={book.id} book={book} update={shelf => handleUpdate(book, shelf)} />;
         })}
       </BookContainer>

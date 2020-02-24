@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { bookStatus } from '../utils/utils';
 import coverFallbackImage from '../assets/cover_fallback.png';
-import { MdModeEdit } from 'react-icons/md';
-import { MdClose } from 'react-icons/md';
+import { MdClose, MdFavorite, MdModeEdit } from 'react-icons/md';
 import { Button, Container, Col, Card, Row } from 'react-bootstrap';
+import styled from 'styled-components';
 
 class Book extends React.Component {
   constructor(props) {
@@ -28,7 +28,6 @@ class Book extends React.Component {
   }
 
   optionSettings() {
-    console.log(this.props.book);
     return (
       <Container
         style={{ padding: 0, top: '0', position: 'absolute', width: '12rem', height: '12rem', backgroundColor: '#ffffffcf' }}
@@ -86,8 +85,13 @@ class Book extends React.Component {
           {!this.state.optionDisplay ? <MdModeEdit /> : <MdClose />}
         </Button>
         <Card.Body>
+          {this.props.book.shelf && (
+            <OnShelf>
+              <MdFavorite />
+              On your shelf
+            </OnShelf>
+          )}
           <Card.Title style={{ fontSize: 16 }}>{this.props.book.title}</Card.Title>
-
           {this.props.book.authors &&
             this.props.book.authors.map(author => {
               return (
@@ -108,3 +112,7 @@ Book.propTypes = {
 };
 
 export default Book;
+
+const OnShelf = styled.div`
+  color: #ff4f4f;
+`;

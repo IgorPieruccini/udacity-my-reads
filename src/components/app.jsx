@@ -2,9 +2,8 @@ import React from 'react';
 import Shelf from './shelf';
 import Header from './header';
 import Search from './search';
-import styled from 'styled-components';
 import { bookStatus, sortBooksByShelf, updateState, isResponseValid } from '../utils/utils';
-import { flexStyled } from '../styled/styled';
+import { Lybrary } from '../styled/styled';
 import { getAll, update, search } from '../BooksAPI';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
@@ -29,13 +28,9 @@ class App extends React.Component {
   handleUpdate(book, shelf) {
     update(book, shelf).then(res => {
       if (isResponseValid(res)) {
-        this.setState(updateState(this.state, book.id, shelf));
+        this.setState(updateState(this.state, book, shelf));
       }
     });
-  }
-
-  clearState() {
-    this.setState(initialState);
   }
 
   render() {
@@ -76,7 +71,7 @@ class App extends React.Component {
                   update={(book, shelf) => {
                     this.handleUpdate(book, shelf);
                   }}
-                  state={this.state}
+                  shelfBooks={this.state}
                 />
               )}
             />
@@ -88,8 +83,3 @@ class App extends React.Component {
 }
 
 export default App;
-
-const Lybrary = styled.div`
-  ${flexStyled}
-  flex-direction: column;
-`;

@@ -1,61 +1,71 @@
-import React from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Shelf from './shelf';
 import { search } from '../BooksAPI';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
-import { isResponseValid } from '../utils/utils';
+import { isResponseValid, checkOnShelf } from '../utils/utils';
+import { Lybrary } from '../styled/styled';
 
-class Search extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      key: '',
-      books: []
-    };
+const Search = ({ shelfBooks, update }) => {
+  const [key, setkey] = useState('');
+  const [books, setBooks] = useState([]);
+  const _shelfBooks = useRef([]);
+  const search$ = useRef(new Subject()).current;
 
-    this.search$ = new Subject();
-    this.search$.pipe(debounceTime(200)).subscribe(key => {
+  useEffect(() => {
+    search$.pipe(debounceTime(200)).subscribe(key => {
       if (key) {
         search(key).then(books => {
           if (isResponseValid(books)) {
-            this.setState({ books });
+            setBooks(checkOnShelf(_shelfBooks.current, books));
           }
         });
       } else {
-        this.setState({ books: [] });
+        setBooks([]);
       }
     });
-  }
+    () => search$.unsubscribe();
+  }, []);
 
-  handleKeyUpdate(key) {
-    this.search$.next(key);
-    this.setState({ key });
-  }
+  // handle shelf update
+  useEffect(
+    () => {
+      _shelfBooks.current = shelfBooks;
+      setBooks(checkOnShelf(shelfBooks, books));
+    },
+    [shelfBooks]
+  );
 
-  render() {
-    return (
-      <div>
-        <form action="">
-          <input
-            type="text"
-            name="search"
-            id="book-search"
-            placeholder="search for a book"
-            onChange={event => {
-              this.handleKeyUpdate(event.target.value);
-            }}
-            value={this.state.key}
-          />
-        </form>
-        <Shelf books={this.state.books} update={(book, shelf) => this.props.update(book, shelf)} />
-      </div>
-    );
-  }
-}
+  const handleKeyUpdate = key => {
+    search$.next(key);
+    setkey(key);
+  };
+
+  return (
+    <div>
+      <form action="">
+        <input
+          type="text"
+          name="search"
+          id="book-search"
+          placeholder="search for a book"
+          onChange={event => {
+            handleKeyUpdate(event.target.value);
+          }}
+          value={key}
+        />
+      </form>
+      <Lybrary>
+        <Shelf books={books} update={(book, shelf) => update(book, shelf)} />
+      </Lybrary>
+    </div>
+  );
+};
 
 Search.propTypes = {
-  update: PropTypes.func.isRequired
+  update: PropTypes.func.isRequired,
+  shelfBooks: PropTypes.object.isRequired
 };
 
 export default Search;
