@@ -4,8 +4,9 @@ import Header from './header';
 import Search from './search';
 import { bookStatus, sortBooksByShelf, updateState, isResponseValid } from '../utils/utils';
 import { Lybrary } from '../styled/styled';
-import { getAll, update, search } from '../BooksAPI';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { getAll, update } from '../BooksAPI';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Container } from 'react-bootstrap';
 
 const initialState = {
   currentlyReading: [],
@@ -35,14 +36,14 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
+      <Container fluid={true} style={{ padding: 0 }}>
         <Router>
           <Switch>
             <Route
               exact
               path={'/'}
               render={() => (
-                <div>
+                <React.Fragment>
                   <Header />
                   <Lybrary>
                     <Shelf
@@ -61,7 +62,7 @@ class App extends React.Component {
                       update={(book, shelf) => this.handleUpdate(book, shelf)}
                     />
                   </Lybrary>
-                </div>
+                </React.Fragment>
               )}
             />
             <Route
@@ -77,7 +78,7 @@ class App extends React.Component {
             />
           </Switch>
         </Router>
-      </div>
+      </Container>
     );
   }
 }

@@ -9,6 +9,12 @@ export const bookStatus = {
   NONE: 'no_status'
 };
 
+export const shelfTitles = {
+  read: 'Read',
+  currentlyReading: 'Reading',
+  wantToRead: 'Want to Read'
+};
+
 /**
  * Shelf are defined by bookStatus
  */
