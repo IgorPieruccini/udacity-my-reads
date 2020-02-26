@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { bookStatus } from '../utils/utils';
 import coverFallbackImage from '../assets/cover_fallback.png';
 import { MdClose, MdFavorite, MdModeEdit } from 'react-icons/md';
-import { Button, Container, Col, Card, Row } from 'react-bootstrap';
+import { Button, Container, Col, Card } from 'react-bootstrap';
 import styled from 'styled-components';
 
 class Book extends React.Component {
@@ -85,7 +85,7 @@ class Book extends React.Component {
           {!this.state.optionDisplay ? <MdModeEdit /> : <MdClose />}
         </Button>
         <Card.Body>
-          {this.props.book.shelf && (
+          {this.props.book.shelf && this.props.onSearch && (
             <OnShelf>
               <MdFavorite />
               On your shelf
@@ -108,7 +108,8 @@ class Book extends React.Component {
 
 Book.propTypes = {
   book: PropTypes.object.isRequired,
-  update: PropTypes.func.isRequired
+  update: PropTypes.func.isRequired,
+  onSearch: PropTypes.bool.isRequired
 };
 
 export default Book;

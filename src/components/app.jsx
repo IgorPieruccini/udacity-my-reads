@@ -2,11 +2,12 @@ import React from 'react';
 import Shelf from './shelf';
 import Header from './header';
 import Search from './search';
-import { bookStatus, sortBooksByShelf, updateState, isResponseValid } from '../utils/utils';
+import { bookStatus, sortBooksByShelf, updateState, isResponseValid, shelfTitles } from '../utils/utils';
 import { Lybrary } from '../styled/styled';
 import { getAll, update } from '../BooksAPI';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { Container } from 'react-bootstrap';
+import { Container, Alert } from 'react-bootstrap';
+import UpdateAlert, { updateAlert$ } from './update-alert';
 
 const initialState = {
   currentlyReading: [],
@@ -30,6 +31,7 @@ class App extends React.Component {
     update(book, shelf).then(res => {
       if (isResponseValid(res)) {
         this.setState(updateState(this.state, book, shelf));
+        updateAlert$.next({ title: book.title, shelf: shelfTitles[shelf] });
       }
     });
   }
@@ -78,6 +80,7 @@ class App extends React.Component {
             />
           </Switch>
         </Router>
+        <UpdateAlert />
       </Container>
     );
   }
