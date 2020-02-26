@@ -1,37 +1,51 @@
 import React, { useState, useEffect } from 'react';
-import { Alert } from 'react-bootstrap';
+import { Alert, Container } from 'react-bootstrap';
 import { Subject } from 'rxjs';
 import styled from 'styled-components';
 
 export const updateAlert$ = new Subject();
 
 const UpdateAlert = () => {
-  const [update, setUpdate] = useState({});
-  const [anim, setAnim] = useState({ opacity: 0 });
+  const [update, setUpdate] = useState([]);
   useEffect(() => {
     updateAlert$.subscribe(update => {
-      setUpdate(update);
-      setAnim({ opacity: 1 });
-      setTimeout(() => setAnim({ opacity: 0 }), 3000);
+      handleAddAlert(update);
+      setTimeout(() => {
+        handleDeleteAlert();
+      }, 3000);
     });
     () => updateAlert$.unsubscribe();
   }, []);
 
+  const handleAddAlert = update => {
+    setUpdate(oldState => [...oldState, update]);
+  };
+
+  const handleDeleteAlert = () => {
+    setUpdate(oldState => oldState.slice(1, oldState.length));
+  };
+
   return (
-    <AlertMessage variant={'primary'} style={anim}>
-      <p>
-        You've add <b>{update.title}</b> to shelf <b>{update.shelf}</b>
-      </p>
-    </AlertMessage>
+    <AlertContainer fluid>
+      {update.map(alert => (
+        <AlertMessage key={alert.title + Math.random} variant={'primary'}>
+          <p>
+            You've add <b>{alert.title}</b> to shelf <b>{alert.shelf}</b>
+          </p>
+        </AlertMessage>
+      ))}
+    </AlertContainer>
   );
 };
 
 export default UpdateAlert;
 
-const AlertMessage = styled(Alert)`
-  transition: all 300ms;
+const AlertContainer = styled(Container)`
   position: fixed;
   bottom: 50px;
+`;
+
+const AlertMessage = styled(Alert)`
   width: 70%;
   margin: 0px 15% 0px 15%;
 `;

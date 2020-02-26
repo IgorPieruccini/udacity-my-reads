@@ -45,7 +45,6 @@ export const sortBooksByShelf = books => {
  * @return {object} shelf if updated book
  */
 export const updateState = (state, book, shelf) => {
-  console.log('state', state);
   const books = [...state.currentlyReading, ...state.wantToRead, ...state.read];
   // if its a new book
   if (!book.shelf) {
