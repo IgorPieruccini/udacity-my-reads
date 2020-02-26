@@ -23,6 +23,7 @@ export const shelfTypes = bookStatus.READ | bookStatus.READING | bookStatus.WANT
 /**
  * separete array of books into arrays of books per chelf type
  * @param {array books}
+ * @return {object} books separeted by shelf
  */
 export const sortBooksByShelf = books => {
   return books.reduce(
@@ -41,6 +42,7 @@ export const sortBooksByShelf = books => {
  * @param {object shelfs array of book} state current state
  * @param {string} book to be update
  * @param {string} shelf to be moved
+ * @return {object} shelf if updated book
  */
 export const updateState = (state, book, shelf) => {
   console.log('state', state);
@@ -68,6 +70,7 @@ export const updateState = (state, book, shelf) => {
 /**
  * check if response from server is not an error
  * @param {any} data
+ * @returns {boolean} true if no error key
  */
 export const isResponseValid = data => {
   return data && !data.hasOwnProperty('error');
@@ -77,8 +80,22 @@ export const isResponseValid = data => {
  * set searchBooks a shelf if is alredy on the user shelf
  * @param {array} shelfBooks
  * @param {array} searchBooks
+ * @returns {array} books with shelf parameter
  */
 export const checkOnShelf = (shelfBooks, searchBooks) => {
   const books = [...shelfBooks.currentlyReading, ...shelfBooks.wantToRead, ...shelfBooks.read];
   return searchBooks.map(book => books.find(shelfBook => shelfBook.id === book.id) ?? book);
+};
+
+/**
+ * get values from url
+ * @param {string} url
+ * @returns {object} object containing values from url
+ */
+export const getUrlVars = url => {
+  var vars = {};
+  url.replace(/[?&]+([^=&]+)=([^&]*)/gi, (m, key, value) => {
+    vars[key] = value;
+  });
+  return vars;
 };

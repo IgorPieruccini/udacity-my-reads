@@ -12,7 +12,7 @@ const Header = () => {
         <Col xs={7} sm={9} md={10} lg={10}>
           <h3>MyReads</h3>
         </Col>
-        <Col style={{ textAlign: 'center', marginTop: 5 }} xs={2} sm={2} md={2} lg={2}>
+        <Col style={{ textAlign: 'center', marginTop: 10 }} xs={2} sm={2} md={2} lg={2}>
           <Link to="/search">
             <Badge variant="light">
               <MdSearch /> more books

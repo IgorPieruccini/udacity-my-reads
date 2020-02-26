@@ -26,5 +26,5 @@ export const HeaderStyle = styled(Container)`
   background-color: #343a40;
   color: white;
   box-shadow: -2px 11px 18px -9px rgba(0, 0, 0, 0.47);
-  height: 40px;
+  height: 50px;
 `;

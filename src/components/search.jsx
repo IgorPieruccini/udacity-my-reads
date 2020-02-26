@@ -4,10 +4,10 @@ import Shelf from './shelf';
 import { search } from '../BooksAPI';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
-import { isResponseValid, checkOnShelf } from '../utils/utils';
+import { isResponseValid, checkOnShelf, getUrlVars } from '../utils/utils';
 import { Lybrary, HeaderStyle } from '../styled/styled';
 import { Link } from 'react-router-dom';
-import { Col, Badge, Row } from 'react-bootstrap';
+import { Col, Badge, Row, Form } from 'react-bootstrap';
 import { MdBook } from 'react-icons/md';
 
 const Search = ({ shelfBooks, update }) => {
@@ -29,6 +29,11 @@ const Search = ({ shelfBooks, update }) => {
       }
     });
     () => search$.unsubscribe();
+    const urlSearch = getUrlVars(window.location.href).search;
+    if (urlSearch) {
+      setkey(urlSearch);
+      search$.next(urlSearch);
+    }
   }, []);
 
   // handle shelf update
@@ -50,20 +55,22 @@ const Search = ({ shelfBooks, update }) => {
       <HeaderStyle fluid>
         <Row>
           <Col style={{ marginTop: 5 }} xs={7} sm={9} md={10} lg={10}>
-            <form action="">
-              <input
-                type="text"
-                name="search"
-                id="book-search"
-                placeholder="search for a book"
-                onChange={event => {
-                  handleKeyUpdate(event.target.value);
-                }}
-                value={key}
-              />
-            </form>
+            <Form>
+              <Form.Group action="">
+                <Form.Control
+                  type="text"
+                  name="search"
+                  id="book-search"
+                  placeholder="search for a book"
+                  onChange={event => {
+                    handleKeyUpdate(event.target.value);
+                  }}
+                  value={key}
+                />
+              </Form.Group>
+            </Form>
           </Col>
-          <Col style={{ textAlign: 'center', marginTop: 5 }} xs={2} sm={2} md={2} lg={2}>
+          <Col style={{ textAlign: 'center', marginTop: 10 }} xs={2} sm={2} md={2} lg={2}>
             <Link to="/">
               <Badge variant="light">
                 <MdBook /> my books
