@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { bookStatus } from '../utils/utils';
+import { bookStatus, shelfTitles } from '../utils/utils';
 import coverFallbackImage from '../assets/cover_fallback.png';
 import { MdClose, MdFavorite, MdModeEdit } from 'react-icons/md';
-import { Button, Container, Col, Card } from 'react-bootstrap';
+import { Button, Container, Col, Card, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
 class Book extends React.Component {
@@ -29,38 +29,43 @@ class Book extends React.Component {
 
   optionSettings() {
     return (
-      <Container
-        style={{ padding: 0, top: '0', position: 'absolute', width: '12rem', height: '12rem', backgroundColor: '#ffffffcf' }}
-      >
-        <Col>
+      <Container style={{ top: '0', position: 'absolute', backgroundColor: '#ffffffcf', height: '100%' }} fluid>
+        <Row>
           {this.props.book.shelf !== bookStatus.READING && (
-            <Button
-              width={100}
-              variant={this.props.book.shelf === bookStatus.READING ? 'secundary' : 'outline-dark'}
-              onClick={() => this.handleUpdateOption(bookStatus.READING)}
-            >
-              {bookStatus.READING}
-            </Button>
+            <Col sm={11} style={{ margin: '2px 0 2px 0' }}>
+              <Button
+                style={{ width: '100%', padding: 0 }}
+                variant={this.props.book.shelf === bookStatus.READING ? 'secundary' : 'outline-dark'}
+                onClick={() => this.handleUpdateOption(bookStatus.READING)}
+              >
+                {shelfTitles[bookStatus.READING]}
+              </Button>
+            </Col>
           )}
-        </Col>
-        <Col>
+
           {this.props.book.shelf !== bookStatus.WANT_TO_READ && (
-            <Button
-              style={{ width: '84%' }}
-              variant="outline-dark"
-              onClick={() => this.handleUpdateOption(bookStatus.WANT_TO_READ)}
-            >
-              {bookStatus.WANT_TO_READ}
-            </Button>
+            <Col sm={11} style={{ margin: '2px 0 2px 0' }}>
+              <Button
+                style={{ width: '100%', padding: 0 }}
+                variant="outline-dark"
+                onClick={() => this.handleUpdateOption(bookStatus.WANT_TO_READ)}
+              >
+                {shelfTitles[bookStatus.WANT_TO_READ]}
+              </Button>
+            </Col>
           )}
-        </Col>
-        <Col>
           {this.props.book.shelf !== bookStatus.READ && (
-            <Button style={{ width: '84%' }} variant="outline-dark" onClick={() => this.handleUpdateOption(bookStatus.READ)}>
-              {bookStatus.READ}
-            </Button>
+            <Col sm={11} style={{ margin: '2px 0 2px 0' }}>
+              <Button
+                style={{ width: '100%', padding: 0 }}
+                variant="outline-dark"
+                onClick={() => this.handleUpdateOption(bookStatus.READ)}
+              >
+                {shelfTitles[bookStatus.READ]}
+              </Button>
+            </Col>
           )}
-        </Col>
+        </Row>
       </Container>
     );
   }

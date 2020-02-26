@@ -12,7 +12,7 @@ export const bookStatus = {
 export const shelfTitles = {
   read: 'Read',
   currentlyReading: 'Reading',
-  wantToRead: 'Want to Read'
+  wantToRead: 'Want to read'
 };
 
 /**
