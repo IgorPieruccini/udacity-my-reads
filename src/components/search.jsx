@@ -8,7 +8,7 @@ import { isResponseValid, checkOnShelf } from '../utils/utils';
 import { Lybrary, HeaderStyle } from '../styled/styled';
 import { Link } from 'react-router-dom';
 import { Col, Badge, Row } from 'react-bootstrap';
-import { MdSearch } from 'react-icons/md';
+import { MdBook } from 'react-icons/md';
 
 const Search = ({ shelfBooks, update }) => {
   const [key, setkey] = useState('');
@@ -66,7 +66,7 @@ const Search = ({ shelfBooks, update }) => {
           <Col style={{ textAlign: 'center', marginTop: 5 }} xs={2} sm={2} md={2} lg={2}>
             <Link to="/">
               <Badge variant="light">
-                <MdSearch /> my books
+                <MdBook /> my books
               </Badge>
             </Link>
           </Col>
