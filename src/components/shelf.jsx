@@ -4,6 +4,7 @@ import Book from './book';
 import styled from 'styled-components';
 import CardDeck from 'react-bootstrap/CardDeck';
 import { borderStyled } from '../styled/styled';
+import { shelfTitles } from '../utils/utils';
 
 const Shelf = ({ type, update, books }) => {
   const handleUpdate = (book, shelf) => {
@@ -14,7 +15,7 @@ const Shelf = ({ type, update, books }) => {
     <ShelfContainer>
       {type && (
         <ShelfTitle>
-          <h4>{type}</h4>
+          <h4>{shelfTitles[type]}</h4>
         </ShelfTitle>
       )}
       <BookContainer>
@@ -40,6 +41,7 @@ export const ShelfTitle = styled.div`
   background-color: #343a40;
   padding: 0.75rem;
   color: white;
+  box-shadow: -2px 11px 18px -9px rgba(0, 0, 0, 0.47);
 `;
 
 export const BookContainer = styled(CardDeck)`
