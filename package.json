@@ -4,7 +4,8 @@
   "description": "udacity projects my reads",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --progress --watch --config webpack.config.js",
+    "start": "webpack-dev-server --mode=development --progress --watch --config webpack.config.js --env.ASSET_PATH=/",
+    "build": "webpack --mode=production --config webpack.config.js --env.ASSET_PATH=./",
     "test": "jest"
   },
   "author": "igor pieruccini",
