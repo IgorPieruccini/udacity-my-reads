@@ -92,7 +92,7 @@ export const checkOnShelf = (shelfBooks, searchBooks) => {
  * @returns {object} object containing values from url
  */
 export const getUrlVars = url => {
-  var vars = {};
+  const vars = {};
   url.replace(/[?&]+([^=&]+)=([^&]*)/gi, (m, key, value) => {
     vars[key] = value;
   });
