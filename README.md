@@ -31,7 +31,10 @@ To build a production version"
 
 it will generate a compact version of your app under the dist directory.
 
-## DEMO
+## Books api
+This api is provided by Udacity, it has the necessary operations to build "MyReads" app.
+[https://github.com/udacity/reactnd-project-myreads-starter](https://github.com/udacity/reactnd-project-myreads-starter)
 
+## Demo
 You can find a demo at:
 [https://myreadsudacity.netlify.com/](https://myreadsudacity.netlify.com/)
