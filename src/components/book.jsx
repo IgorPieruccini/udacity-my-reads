@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { bookStatus, shelfTitles } from '../utils/utils';
 import coverFallbackImage from '../assets/cover_fallback.png';
 import { MdClose, MdFavorite, MdModeEdit } from 'react-icons/md';
-import { Button, Container, Col, Card, Row } from 'react-bootstrap';
+import { Button, Container, Col, Card, Row, Badge } from 'react-bootstrap';
 import styled from 'styled-components';
 
 class Book extends React.Component {
@@ -93,7 +93,7 @@ class Book extends React.Component {
           {this.props.book.shelf && this.props.onSearch && (
             <OnShelf>
               <MdFavorite />
-              On your shelf
+              <Badge>{shelfTitles[this.props.book.shelf]}</Badge>
             </OnShelf>
           )}
           <Card.Title style={{ fontSize: 16 }}>{this.props.book.title}</Card.Title>
