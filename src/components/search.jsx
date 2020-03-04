@@ -22,6 +22,8 @@ const Search = ({ shelfBooks, update }) => {
         search(key).then(books => {
           if (isResponseValid(books)) {
             setBooks(checkOnShelf(_shelfBooks.current, books));
+          } else {
+            setBooks([]);
           }
         });
       } else {
